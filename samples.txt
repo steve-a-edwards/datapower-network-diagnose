@@ -1,240 +1,215 @@
-idg(config)# show clock
+test tcp-connection address port [timeout]
 
-    Local time: Mon Jan  1 02:01:26 2018
-     Time zone: UTC
-Time zone spec: UTC
-Uptime: reload: 0 days 01:42:53
-Uptime: reboot: 0 days 01:44:08
+timeout
+Optionally specifies the number of seconds to wait for a response from the
+target. The default is 10.
+
+idg# test tcp-connection 192.168.1.254 80
+TCP connection successful
+
+idg# test tcp-connection 192.168.1.250 80
+
+% TCP connection to "192.168.1.250 port 80" failed (connection refused)
+
+idg# test tcp-connection 192.168.1.250 80 2
+
+% TCP connection to "192.168.1.250 port 80" failed (connection refused)
+
+==========
+ping address
+ping host [IP-version]
+
+The ping command sends 6 Internet Control Message Protocol (ICMP)
+echo-request messages to the specified host with a one second interval between
+each message and reports the results.
+
+idg# ping 192.168.1.254
+PING  (192.168.1.254): with 56 data bytes
+64 bytes from 192.168.1.254: seq=0, ttl=64, rtt=3.0 ms
+64 bytes from 192.168.1.254: seq=1, ttl=64, rtt=3.0 ms
+64 bytes from 192.168.1.254: seq=2, ttl=64, rtt=3.0 ms
+64 bytes from 192.168.1.254: seq=3, ttl=64, rtt=3.0 ms
+64 bytes from 192.168.1.254: seq=4, ttl=64, rtt=5.0 ms
+64 bytes from 192.168.1.254: seq=5, ttl=64, rtt=7.0 ms
+6 packets transmitted, 6 received, 0% loss, time 6012ms
+
+idg# ping www.steve-edwards.org
+PING www.steve-edwards.org error: Unknown error
+
+% Failed to resolve host name: 'www.steve-edwards.org'
+
+=======================
+idg# show dns
+dns [down]
+---
+ admin-state enabled
+ static-host dp_internal_ip 192.168.1.75
+ static-host dp_public_ip 192.168.1.75
+ static-host image_ip 192.168.1.137
+ static-host localhost 127.0.0.1
+ ip-preference 4
+ force-ip-preference off
+ load-balance round-robin
+ retries 2
+ timeout 5 Seconds
+
+idg# show dns
+dns [up]
+---
+ admin-state enabled
+ name-server 192.168.1.254 53 53 3
+ static-host dp_internal_ip 192.168.1.75
+ static-host dp_public_ip 192.168.1.75
+ static-host image_ip 192.168.1.137
+ static-host localhost 127.0.0.1
+ ip-preference 4
+ force-ip-preference off
+ load-balance round-robin
+ retries 2
+ timeout 5 Seconds
+
+idg# ping www.steve-edwards.org
+PING www.steve-edwards.org (52.218.41.140): with 56 data bytes
+64 bytes from 52.218.41.140: seq=0, ttl=234, rtt=25.0 ms
+64 bytes from 52.218.41.140: seq=1, ttl=234, rtt=26.0 ms
+64 bytes from 52.218.41.140: seq=2, ttl=234, rtt=23.0 ms
+64 bytes from 52.218.41.140: seq=3, ttl=234, rtt=23.0 ms
+64 bytes from 52.218.41.140: seq=4, ttl=234, rtt=20.0 ms
+64 bytes from 52.218.41.140: seq=5, ttl=234, rtt=23.0 ms
+6 packets transmitted, 6 received, 0% loss, time 6018ms
 
 
-idg(config)# exit
-idg#
-idg#
-idg#
-idg# show clock
-
-    Local time: Mon Jan  1 02:01:46 2018
-     Time zone: UTC
-Time zone spec: UTC
-Uptime: reload: 0 days 01:43:14
-Uptime: reboot: 0 days 01:44:28
-
-
-idg#
-idg# show ntp-service
-
-ntp-service [down] (modified)
------------
- admin-state disabled
- remote-server 192.168.1.123
- remote-server 192.168.1.124
- refresh-interval 900 Seconds
-
-
-idg# ntp-service
-Unknown command or macro (ntp-service)
 idg# co
 Global configuration mode
-idg(config)#
-idg(config)#
-idg(config)#
-idg(config)# ntp-service
-Modify NTP Service configuration
+idg(config)# dns
+Modify DNS Settings configuration
 
-idg(config ntp-service)# cancel
-idg(config)#
-idg(config)#
-idg(config)#
-idg(config)#
-idg(config)#
-idg(config)# show ntp-service
-
-ntp-service [down] (modified)
------------
- admin-state disabled
- remote-server 192.168.1.123
- remote-server 192.168.1.124
- refresh-interval 900 Seconds
-
-
-idg(config)# ntp-service
-Modify NTP Service configuration
-
-idg(config ntp-service)# no remote-server 192.168.1.123
-idg(config ntp-service)# no remote-server 192.168.1.124
-idg(config ntp-service)# remote-server time1.google.com
-idg(config ntp-service)# show
- admin-state disabled
- remote-server time1.google.com
- refresh-interval 900 Seconds
-idg(config ntp-service)# exit
-idg(config)#
-idg(config)# show ntp-service
-
-ntp-service [down] (modified)
------------
- admin-state disabled
- remote-server time1.google.com
- refresh-interval 900 Seconds
-
-
-idg(config)# ntp-service
-Modify NTP Service configuration
-
-idg(config ntp-service)# admin-state enabled
-idg(config ntp-service)# exit
-idg(config)#
-idg(config)# show ntp-service
-
-ntp-service [up] (modified)
------------
+idg(config dns)# show
  admin-state enabled
- remote-server time1.google.com
- refresh-interval 900 Seconds
+ name-server 192.168.1.254 53 53 3
+ static-host dp_internal_ip 192.168.1.75
+ static-host dp_public_ip 192.168.1.75
+ static-host image_ip 192.168.1.137
+ static-host localhost 127.0.0.1
+ ip-preference 4
+ force-ip-preference off
+ load-balance round-robin
+ retries 2
+ timeout 5 Seconds
+idg(config dns)# cancel
+
+idg# traceroute www.ibm.com
+Traceroute www.ibm.com (23.63.87.115)
+ 1:    192.168.1.254  rtt= 3 ms
+ 2:             ????  rtt=999 ms
+ 3:     62.255.45.65  rtt=21 ms
+ 4:             ????  rtt=999 ms
+ 5:             ????  rtt=999 ms
+ 6:             ????  rtt=999 ms
 
 
-idg(config)# show clock
+=========================================
+DNS server removed
 
-    Local time: Sun Mar 20 09:33:10 2022
-     Time zone: UTC
-Time zone spec: UTC
-Uptime: reload: 0 days 01:47:02
-Uptime: reboot: 0 days 01:48:16
+idg# show dns
 
-
-idg(config)# show clock
-
-    Local time: Sun Mar 20 09:34:50 2022
-     Time zone: UTC
-Time zone spec: UTC
-Uptime: reload: 0 days 01:48:42
-Uptime: reboot: 0 days 01:49:57
-
-
-idg(config)# timezone
-Modify Time Settings configuration
-
-idg(config timezone)# cancel
-idg(config)#
-idg(config)#
-idg(config)# show timezone
-
-timezone [up]
---------
+dns [down] (modified)
+---
  admin-state enabled
- name UTC
- custom STD
- direction West
- offset-hours 0 Hours
- offset-minutes 0 Minutes
- daylight-offset 1 Hours
- daylight-name DST
- daylight-start-month March
- daylight-start-week 2 Instance
- daylight-start-day Sunday
- daylight-start-hours 2 Hours
- daylight-start-minutes 0 Minutes
- daylight-stop-month November
- daylight-stop-week 1 Instance
- daylight-stop-day Sunday
- daylight-stop-hours 2 Hours
- daylight-stop-minutes 0 Minutes
+ static-host dp_internal_ip 192.168.1.75
+ static-host dp_public_ip 192.168.1.75
+ static-host image_ip 192.168.1.137
+ static-host localhost 127.0.0.1
+ ip-preference 4
+ force-ip-preference off
+ load-balance round-robin
+ retries 2
+ timeout 5 Seconds
 
+idg# traceroute www.ibm.com
+Traceroute www.ibm.com error: Unknown error
+% Failed to resolve host name: 'www.ibm.com'
 
-idg(config)# show timezone
+===========================
+idg# co
+Global configuration mode
+idg(config)# dns
+Modify DNS Settings configuration
 
-timezone [up] (modified)
---------
+idg(config dns)# name-server 192.168.1.254 53 53 3
+idg(config dns)# show
  admin-state enabled
- name GMT0BST
- custom STD
- direction West
- offset-hours 0 Hours
- offset-minutes 0 Minutes
- daylight-offset 1 Hours
- daylight-name DST
- daylight-start-month March
- daylight-start-week 2 Instance
- daylight-start-day Sunday
- daylight-start-hours 2 Hours
- daylight-start-minutes 0 Minutes
- daylight-stop-month November
- daylight-stop-week 1 Instance
- daylight-stop-day Sunday
- daylight-stop-hours 2 Hours
- daylight-stop-minutes 0 Minutes
+ name-server 192.168.1.254 53 53 3
+ static-host dp_internal_ip 192.168.1.75
+ static-host dp_public_ip 192.168.1.75
+ static-host image_ip 192.168.1.137
+ static-host localhost 127.0.0.1
+ ip-preference 4
+ force-ip-preference off
+ load-balance round-robin
+ retries 2
+ timeout 5 Seconds
+idg(config dns)# exit
+idg(config)#
+idg(config)# traceroute www.ibm.com
+Traceroute www.ibm.com (23.63.87.115)
+ 1:    192.168.1.254  rtt= 2 ms
+ 2:             ????  rtt=999 ms
+ 3:     62.255.45.65  rtt=13 ms
+ 4:             ????  rtt=999 ms
+ 5:             ????  rtt=999 ms
+ 6:             ????  rtt=999 ms
 
-idg(config)# show clock
+==========
+idg# show link
 
-    Local time: Sun Mar 20 09:39:59 2022
-     Time zone: GMT
-Time zone spec: GMT0BST,M3.5.0/1:00,M10.5.0/2:00
-Uptime: reload: 0 days 01:53:52
-Uptime: reboot: 0 days 01:55:06
+ Name    ifIndex Status  Mode        Type     MTU   Aggregate interface Link address
+ ------- ------- ------- ----------- -------- ----- ------------------- -----------------
+ lo      1       ok      none        Other    16436                     00:00:00:00:00:00
+ eth0    4       ok      10GBASE-KX4 Ethernet 1500                      00:0c:29:c8:e2:75
+ eth1    5       no-link none        Ethernet 1500                      00:0c:29:c8:e2:7f
+ eth2    6       no-link none        Ethernet 1500                      00:0c:29:c8:e2:89
+ eth3    7       no-link none        Ethernet 1500                      00:0c:29:c8:e2:93
+ sit0    2       no-link none        Other    1480                      00:00:00:00:00:00
+ ip6tnl0 3       no-link none        Other    1460                      00:00:00:00:00:00
 
-idg(config)# show clock
 
-    Local time: Sun Mar 20 10:40:26 2022
-     Time zone: CET
-Time zone spec: CET-1CEST,M3.5.0/2:00,M10.5.0/3:00
-Uptime: reload: 0 days 01:54:19
-Uptime: reboot: 0 days 01:55:33
+======
+idg# ping www.not-in-the-universe.com
 
-idg(config)# show timezone
+% Failed to resolve host name: 'www.not-in-the-universe.com'
 
-timezone [up] (modified)
---------
+#### Add static host:
+idg# co
+Global configuration mode
+idg(config)# show dns
+
+dns [up]
+---
  admin-state enabled
- name CET-1CEST
- custom STD
- direction West
- offset-hours 0 Hours
- offset-minutes 0 Minutes
- daylight-offset 1 Hours
- daylight-name DST
- daylight-start-month March
- daylight-start-week 2 Instance
- daylight-start-day Sunday
- daylight-start-hours 2 Hours
- daylight-start-minutes 0 Minutes
- daylight-stop-month November
- daylight-stop-week 1 Instance
- daylight-stop-day Sunday
- daylight-stop-hours 2 Hours
- daylight-stop-minutes 0 Minutes
+ name-server 192.168.1.254 53 53 3
+ static-host dp_internal_ip 192.168.1.75
+ static-host dp_public_ip 192.168.1.75
+ static-host image_ip 192.168.1.137
+ static-host localhost 127.0.0.1
+ ip-preference 4
+ force-ip-preference off
+ load-balance round-robin
+ retries 2
+ timeout 5 Seconds
 
-idg(config)# show clock
+idg(config)# dns
+Modify DNS Settings configuration
 
-    Local time: Sun Mar 20 10:41:49 2022
-     Time zone: CET
-Time zone spec: CET-1CEST,M3.5.0/2:00,M10.5.0/3:00
-Uptime: reload: 0 days 01:55:41
-Uptime: reboot: 0 days 01:56:56
-
-=== Change timezone
-
-idg(config)# show clock
-
-    Local time: Sun Mar 20 10:45:18 2022
-     Time zone: CET
-Time zone spec: CET-1CEST,M3.5.0/2:00,M10.5.0/3:00
-Uptime: reload: 0 days 01:59:11
-Uptime: reboot: 0 days 02:00:25
-
-
+idg(config dns)# static-host www.not-in-the-universe.com 192.168.1.254
+idg(config dns)# exit
 idg(config)#
-idg(config)# timezone
-Modify Time Settings configuration
-
-idg(config timezone)# name GMT0BST
-idg(config timezone)# exit
-idg(config)#
-idg(config)# show clock
-
-    Local time: Sun Mar 20 09:45:48 2022
-     Time zone: GMT
-Time zone spec: GMT0BST,M3.5.0/1:00,M10.5.0/2:00
-Uptime: reload: 0 days 01:59:40
-Uptime: reboot: 0 days 02:00:54
-
-
+idg(config)# ping www.not-in-the-universe.com
+PING www.not-in-the-universe.com (192.168.1.254): with 56 data bytes
+64 bytes from 192.168.1.254: seq=0, ttl=64, rtt=2.0 ms
+64 bytes from 192.168.1.254: seq=1, ttl=64, rtt=4.0 ms
+64 bytes from 192.168.1.254: seq=2, ttl=64, rtt=13.0 ms
+64 bytes from 192.168.1.254: seq=3, ttl=64, rtt=5.0 ms
+64 bytes from 192.168.1.254: seq=4, ttl=64, rtt=4.0 ms
+64 bytes from 192.168.1.254: seq=5, ttl=64, rtt=5.0 ms
+6 packets transmitted, 6 received, 0% loss, time 6016ms
