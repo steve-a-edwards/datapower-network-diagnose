@@ -1,3 +1,99 @@
+ntp-service [down] (modified)
+-----------
+ admin-state disabled
+ remote-server 192.168.1.123
+ remote-server 192.168.1.124
+ refresh-interval 900 Seconds
+
+idg# show clock
+    Local time: Mon Jan  1 02:01:46 2018
+     Time zone: UTC
+Time zone spec: UTC
+Uptime: reload: 0 days 01:43:14
+Uptime: reboot: 0 days 01:44:28
+
+idg#
+idg# show ntp-service
+
+ntp-service [down] (modified)
+-----------
+ admin-state disabled
+ remote-server 192.168.1.123
+ remote-server 192.168.1.124
+ refresh-interval 900 Seconds
+
+
+idg# ntp-service
+Unknown command or macro (ntp-service)
+idg# co
+Global configuration mode
+idg(config)#
+idg(config)#
+idg(config)#
+idg(config)# ntp-service
+Modify NTP Service configuration
+
+idg(config ntp-service)# cancel
+idg(config)#
+idg(config)#
+idg(config)#
+idg(config)#
+idg(config)#
+idg(config)# show ntp-service
+
+ntp-service [down] (modified)
+-----------
+ admin-state disabled
+ remote-server 192.168.1.123
+ remote-server 192.168.1.124
+ refresh-interval 900 Seconds
+
+
+idg(config)# ntp-service
+Modify NTP Service configuration
+
+idg(config ntp-service)# no remote-server 192.168.1.123
+idg(config ntp-service)# no remote-server 192.168.1.124
+idg(config ntp-service)# remote-server time1.google.com
+idg(config ntp-service)# show
+ admin-state disabled
+ remote-server time1.google.com
+ refresh-interval 900 Seconds
+idg(config ntp-service)# exit
+idg(config)#
+idg(config)# show ntp-service
+
+ntp-service [down] (modified)
+-----------
+ admin-state disabled
+ remote-server time1.google.com
+ refresh-interval 900 Seconds
+
+
+idg(config)# ntp-service
+Modify NTP Service configuration
+
+idg(config ntp-service)# admin-state enabled
+idg(config ntp-service)# exit
+idg(config)#
+idg(config)# show ntp-service
+
+ntp-service [up] (modified)
+-----------
+ admin-state enabled
+ remote-server time1.google.com
+ refresh-interval 900 Seconds
+
+
+idg(config)# show clock
+    Local time: Sun Mar 20 09:33:10 2022
+     Time zone: UTC
+Time zone spec: UTC
+Uptime: reload: 0 days 01:47:02
+Uptime: reboot: 0 days 01:48:16
+
+
+
 idg(config)\# show clock
 
     Local time: Mon Jan  1 02:01:26 2018
