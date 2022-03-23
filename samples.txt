@@ -341,3 +341,24 @@ idg(config)# show netarp
  192.168.1.125 c4:91:0c:b4:e3:3a eth3      Ethernet
  192.168.1.125 c4:91:0c:b4:e3:3a eth1      Ethernet
  192.168.1.254 a8:4e:3f:1f:42:02 eth0      Ethernet
+ 
+ =====
+ idg(config)# show network
+
+network [up]
+-------
+ admin-state enabled
+ block-traffic on
+ icmp-disable Timestamp-Reply
+ ecn-disable off
+ destination-routing off
+ relax-interface-isolation on
+ disable-interface-isolation off
+ tcp-retries 5
+ arp-retries 8
+ arp-interval 500 Milliseconds
+ reverse-path-filtering off
+ tcp-window-scale on
+ ephemeral-port-range 10000
+ 
+ 
