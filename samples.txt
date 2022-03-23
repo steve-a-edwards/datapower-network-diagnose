@@ -67,6 +67,18 @@ idg# show ipaddress
 
 =====
 
+idg(config)# show interface eth0
+
+               Name: eth0
+            ifIndex: 4
+             Status: ok
+               Mode: 10GBASE-KX4
+               Type: Ethernet
+                MTU: 1500
+Aggregate interface:
+       Link address: 00:0c:29:fb:f6:ae
+=====
+
 idg# show ethernet
 
 ethernet: eth0 [up]
