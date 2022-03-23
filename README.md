@@ -1,17 +1,18 @@
 # datapower-network-diagnose
 
-Summary CLI commands - connection:
+Summary CLI commands - connection:  
 ping  
 test tcp-connection  
 show link  
-show ipaddress
+show ipaddress  
 show ethernet  
-show dns
-traceroute 
+show dns  
+traceroute  
 show route  
-show network-interface  
 show tcp  
-show netarp 
+show network-interface  
+show netarp  
+show network  
 
 Summary CLI commands - time / zone:
 show ntp-service
