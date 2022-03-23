@@ -1,5 +1,11 @@
+ESXI OVA install
 
+tar -xvf idg2018410.lts.dev.ova (PowerSHell)
+- then choose create VM from OVF and all othe files
 
+this set of files did not create VM
+tar -xvf idg7200.vmware_deved.ova
+=====
 DataPower ethernet ports report a no-link status
 https://www.ibm.com/support/pages/datapower-ethernet-ports-report-no-link-status
 
