@@ -1,0 +1,12 @@
+
+
+DataPower ethernet ports report a no-link status
+https://www.ibm.com/support/pages/datapower-ethernet-ports-report-no-link-status
+
+
+The appliance does not appear to have network connectivity despite being physically connected to the network cables.
+The CLI commands "show int mode", "show network-interface" and "show ethernet" indicate a no-link status.
+
+MustGather Collecting data: WebSphere DataPower SOA Appliances: Ethernet port test
+https://www.ibm.com/support/pages/node/99961
+
